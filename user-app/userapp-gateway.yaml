@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: userapp-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: userapp
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - userapp-gateway
+  http:
+  - route:
+    - destination:
+        host: user-app
+        port:
+          number: 8080

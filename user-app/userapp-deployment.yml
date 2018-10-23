@@ -1,0 +1,35 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: user-app
+  labels:
+    app: user-app
+spec:
+  selector:
+    app: user-app
+  ports:
+  - name: TCP
+    port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-app
+  labels:
+    app: user-app
+spec:
+  selector:
+      matchLabels:
+        app: user-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-app
+    spec:
+      containers:
+        - name: user-app
+          image: user-app:v0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

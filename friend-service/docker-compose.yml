@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  mysql03:
+    image: mysql:latest
+    environment:
+    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_DATABASE=friends
+    - MYSQL_USER=springuser
+    - MYSQL_PASSWORD=kawapasu
+  friendservice:
+    image: eugeneywang/friendservice
+    depends_on:
+    - mysql03
+    ports:
+    - 8081:8081
+    environment:
+    - DATABASE_HOST=mysql03
+    - DATABASE_USER=springuser
+    - DATABASE_PASSWORD=kawapasu
+    - DATABASE_NAME=friends
+    - DATABASE_PORT=3306

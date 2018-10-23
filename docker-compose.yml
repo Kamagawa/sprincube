@@ -1,0 +1,35 @@
+version: '2'
+services:
+  userapp:
+    image: eugeneywang/userapp
+    container_name: userapp
+    mem_limit: 256M
+
+    entrypoint: ["./wait-for-it.sh","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    ports:
+    - 8080:8080
+
+  customers-service:
+    image: eugeneywang/account-service
+    container_name: account-service
+    mem_limit: 256M
+    links:
+    - userapp
+    depends_on:
+    - userapp
+    entrypoint: ["./wait-for-it.sh","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    ports:
+    - 8081:8081
+
+  friend-service:
+    image: eugeneywang/friend-service
+    container_name: friend-service
+    mem_limit: 256M
+    links:
+    - userapp
+    depends_on:
+    - userapp
+    entrypoint: ["./wait-for-it.sh","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    ports:
+    - 8082:8082
+

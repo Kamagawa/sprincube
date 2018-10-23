@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+      convert -f .\docker-compose.yml
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql03
+  name: mysql03
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mysql03
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: friends
+        - name: MYSQL_PASSWORD
+          value: kawapasu
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        - name: MYSQL_USER
+          value: springuser
+        image: mysql:latest
+        name: mysql03
+        ports:
+        - containerPort: 3306
+        resources: {}
+      restartPolicy: Always
+status: {}

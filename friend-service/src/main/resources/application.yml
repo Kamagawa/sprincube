@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  application:
+    name: friend-service
+  datasource:
+    url: jdbc:mysql://sql9.freemysqlhosting.net:3306/sql9262377
+    username: sql9262377
+    password: WQUH84tsDD
+  data:
+    rest:
+      base-path: api
+---
+spring:
+  profiles: container
+  datasource:
+    url: jdbc:mysql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+server:
+  port: 8081
+

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: user-app
+
+
+server:
+  port: 8080
+
+management:
+  security:
+    enabled: false
+
+
+
+accountService:
+  baseUrl: http://account-service:8082/
+friendService:
+  baseUrl: http://friend-service:8081/
+
