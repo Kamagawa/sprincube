@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: enemy
+  name: enemy
+spec:
+  ports:
+  - name: "8083"
+    port: 8083
+    targetPort: 8083
+  selector:
+    app: enemy
+  type: NodePort
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: enemy
+  name: enemy
+spec:
+  replicas: 1
+  strategy: {}
+  selector:
+    matchLabels:
+      app: enemy
+  template:
+    metadata:
+      labels:
+        app: enemy
+    spec:
+      containers:
+      - image: enemy:v0
+        name: enemy
+        ports:
+        - containerPort: 8083
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+
+        - name: CONFIG_FILE
+          value: /etc/config/config.yaml
+        - name: POSTGRES_HOST
+          value: postgres
+        - name: POSTGRES_PORT
+          value: "3306"
+        - name: POSTGRES_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: dbname
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secret-config
+              key: password
+
+

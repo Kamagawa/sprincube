@@ -1,0 +1,33 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+  application:
+    name: enemy
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    continueOnError: true
+    url: jdbc:mysql://sql9.freemysqlhosting.net:3306/sql9262377
+    username: sql9262377
+    password: WQUH84tsDD
+    initialSize: 0
+    timeBetweenEvictionRunsMillis: 5000
+    minEvictableIdleTimeMillis: 5000
+    minIdle: 0
+    initialization-mode: never
+  data:
+    rest:
+      base-path: api
+---
+spring:
+  profiles: container
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+server:
+  port: 8083
+

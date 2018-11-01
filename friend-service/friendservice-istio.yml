@@ -40,7 +40,7 @@ spec:
       containers:
       - env:
         - name: DATABASE_HOST
-          value: sql9.freemysqlhosting.net
+          value: den1.mysql6.gear.host
         - name: DATABASE_NAME
           valueFrom:
             secretKeyRef:
@@ -165,22 +165,7 @@ metadata:
   name: mysecret
 type: Opaque
 data:
-  DATABASE_NAME: c3FsOTI2MjM3Nw==
-  DATABASE_USER: c3FsOTI2MjM3Nw==
-  DATABASE_PASSWORD: V1FVSDg0dHNERA==
----
-apiVersion: networking.istio.io/v1alpha3
-kind: ServiceEntry
-metadata:
-  name: mysql-external
-spec:
-  hosts:
-  - sql9.freemysqlhosting.net
-  addresses:
-  - sql9.freemysqlhosting.net
-  ports:
-  - name: tcp
-    number: 3306
-    protocol: tcp
-  location: MESH_EXTERNAL
+  DATABASE_NAME: Y29vbGZyaWVuZHMK
+  DATABASE_USER: Y29vbGZyaWVuZHMK
+  DATABASE_PASSWORD: QWI3N0YtODhNXzlsCg==
 ---

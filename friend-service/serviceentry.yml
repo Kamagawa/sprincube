@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: service-entry
+spec:
+  hosts:
+  - den1.mysql6.gear.host
+
+  addresses:
+  - den1.mysql6.gear.host/32
+  ports:
+  - name: tcp
+    number: 3306
+    protocol: tcp
+  location: MESH_EXTERNAL

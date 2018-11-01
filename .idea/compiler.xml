@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="account-service_main" target="1.8" />
       <module name="account-service_test" target="1.8" />
+      <module name="enemy_main" target="1.8" />
+      <module name="enemy_test" target="1.8" />
       <module name="friend-service_main" target="1.8" />
       <module name="friend-service_test" target="1.8" />
       <module name="user-app_main" target="1.8" />
