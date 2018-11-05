@@ -8,8 +8,9 @@ spec:
   selector:
     app: user-app
   ports:
-  - name: TCP
-    port: 8080
+  - name: "main"
+    port: 80
+    targetPort: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,3 +34,6 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
+          envFrom:
+          - configMapRef:
+              name: path-config

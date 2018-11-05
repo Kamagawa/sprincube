@@ -35,3 +35,23 @@
      -  Check the port that is being forwarded by the gateway to the project port
      -  Can choose to modify the project port to one of the default forwarded port in ingress, ex. port 80 forwards to 31380 in Ingress gateway
   -  To test the gateway, visit the following url in a browser: http://<minikube ip>:<port>
+
+
+  Minikube Error:
+  UNAVAILABLE:no healthy upstream
+
+  UNAVAILABLE:upstream connect error or disconnect/reset before headers
+
+  run:
+  ```bash
+  minikube update-context
+  ```
+
+  to update the context. However, most of the time, these above 2 errors are cuased because the pod you are trying to access has not finished initialization. Just wait for a little bit will usually do the trick.
+  If the service was not initialized, you would not even make it to this page. It will display a cannot connect or default 404 error page.
+
+
+  To Test if an cluster internal location can be accessed, one can run the following command.
+
+
+

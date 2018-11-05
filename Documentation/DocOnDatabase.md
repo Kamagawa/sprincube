@@ -172,3 +172,5 @@ In NoSQL it will be store as it is, in SQL, it will most likely be store into 2 
 | 2  | 1,5,3 |
 | 3  | 7,9,4 |
 
+
+It is recommended, to store database connection detail in config map, and connection authentication in

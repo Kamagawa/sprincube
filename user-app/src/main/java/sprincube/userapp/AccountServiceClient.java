@@ -18,7 +18,7 @@ public class AccountServiceClient {
 
     private RestTemplate restTemplate;
 
-    @Value("${accountService.baseUrl}")
+    @Value("${ACCOUNT_SERVICE}")
     private String accountUrl;
 
 

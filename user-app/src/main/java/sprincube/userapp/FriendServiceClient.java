@@ -16,8 +16,13 @@ public class FriendServiceClient {
 
     private RestTemplate restTemplate;
 
-    @Value("${friendService.baseUrl}")
-    private String friendUrl;
+    @Value("${FRIEND_SERVICE}")
+    private String url;
+
+    @Value("${_main._tcp.friend-service.default}")
+    private String port;
+
+    private String friendUrl = url + port;
 
     @Autowired
     public FriendServiceClient(RestTemplate restTemplate) {

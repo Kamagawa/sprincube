@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: path-config
+  namespace: default
+data:
+  ACCOUNT_SERVICE: "http://account-service"
+  FRIEND_SERVICE: "http://friend-service"
+  ENEMY_SERVICE: "http://enemy-service"
