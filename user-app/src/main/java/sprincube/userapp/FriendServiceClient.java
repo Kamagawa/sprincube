@@ -16,13 +16,11 @@ public class FriendServiceClient {
 
     private RestTemplate restTemplate;
 
-    @Value("${FRIEND_SERVICE}")
-    private String url;
+    @Value("${FRIEND-SERVICE:friend-service}")
+    private String URL;
 
-    @Value("${_main._tcp.friend-service.default}")
-    private String port;
-
-    private String friendUrl = url + port;
+    @Value("${FRIEND-PORT:}")
+    private String PORT;
 
     @Autowired
     public FriendServiceClient(RestTemplate restTemplate) {
@@ -31,6 +29,7 @@ public class FriendServiceClient {
 
     //@HystrixCommand(fallbackMethod = "defaultFriend")
     public Iterable getFriend() {
+        String friendUrl = "http://" + URL + ":" + PORT;
         logger.info("Getting friend from FriendServiceClient");
         Iterable it = restTemplate.getForObject(friendUrl, Iterable.class);
         return it;
@@ -39,7 +38,7 @@ public class FriendServiceClient {
     //@HystrixCommand(fallbackMethod = "defaultType")
     public Map getFriendById(String id) {
         logger.info("Getting friend from FriendServiceClient");
-        String friendTypeUrl = friendUrl + "/" + id;
+        String friendTypeUrl = "http://" + URL + ":" + PORT + "/" + id;
         Map map = restTemplate.getForObject(friendTypeUrl, Map.class);
         return map;
     }

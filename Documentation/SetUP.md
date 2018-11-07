@@ -2,10 +2,10 @@
 # A Comprehensive Documentation
 
 ## Index
-- [Set up](#set-up-the-kubernetes-environment)
-- [Database](#database-connection)
-- Config Map
-- Service Discovery
+- [Set up the Kubernetes Environment](#set-up-the-kubernetes-environment)
+- [Database Connection](#database-connection)
+- [Config Map and Secrets](#config-maps-and-sercrets)
+- [Service Discovery](#service-discovery)
 
 ## Set up the Kubernetes Environment
 Service mesh that enables users to describe network of microservices in discovery, load balancing, failure recovery, metrics and monitoring .
@@ -356,6 +356,87 @@ spec:
         - key: redis-config
           path: redis.conf
 ```
+##Secres 
+A secret is an object that stores sensitive data in an encoded fashion. Secret stores base64 encoded data in a map: 
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+type: Opaque
+data:
+  username: YWRtaW4=
+  password: MWYyZDFlMmU2N2Rm
+```
+The String can be encoded: 
+```bash
+$ echo -n 'admin' | base64
+YWRtaW4=
+$ echo -n '1f2d1e2e67df' | base64
+MWYyZDFlMmU2N2Rm
+```
+and decoded: 
+```bash
+$ echo 'MWYyZDFlMmU2N2Rm' | base64 --decode
+1f2d1e2e67df
+```
+Then import it as environment Variable: 
+```yaml
+ - name: SECRET_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: mysecret
+            key: password
+```
 
 
 # Service Discovery 
+## Kube-DNS, Ingress, Envoy
+By default, Kubernetes, and the istio on top of it uses Kube-DNS to assign a name to the Microservice Service. The name is named in the selector section of service deployment. Then when traffic comes through the Ingress Gateway, Envy performs a service discovery to route user to the desired location. In the mean time, performing load balancing and security. 
+
+Here are the two major appraoches through default method:
+
+ 
+### Container Level Port Forwarding 
+This is the most commonly used method found online. The Approach was to rely on Kube-DNS to poiint to the microservice's default ':80' port. Then in service route it to the application port. 
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 9376
+  externalIPs:
+  - 80.11.12.10
+```
+Here the deployment container accept connection on default 80 port.Then forward the connection to port '9376' on the application level. 
+
+This method works the best when each microservice correspond to one port. The deployer of this microservice knows which port they shall forward to on the application level. So that when developer calls a service, they do not need to be concern about the port to call.
+
+However, this method force every call on container level to 80.
+
+### Port Naming
+Aside from container level port forwarding, one can name the port at of "http" and run a query for DNS SRV record by "_http._tcp.my-service.my-ns" to discover the port "http".
+
+### DNS SRV Record
+
+
+## CoreDNS
+Core DNS is a replacement to the kube-DNS, it offers "chained plugin", which means, it supports mutiple plugins, which also means, it opens up the option to program customizable plugin. CoreDNS could be used to give a higer degree of freedom when we need to handle our own DNS service discovery.
+
+## Test on DNS Records: 
+run this: 
+```bash
+$ kubectl run -i -t --image=infoblox/dnstools:k8sblog --restart=Never dnstest
+
+Waiting for pod default/dnstest to be running, status is Pending, pod ready: false
+If you don't see a command prompt, try pressing enter.
+
+# curl nginx.default.svc.cluster.local
+```

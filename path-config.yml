@@ -4,6 +4,6 @@ metadata:
   name: path-config
   namespace: default
 data:
-  ACCOUNT_SERVICE: "http://account-service"
-  FRIEND_SERVICE: "http://friend-service"
-  ENEMY_SERVICE: "http://enemy-service"
+  ACCOUNT-SERVICE: "account-service"
+  ACCOUNT-PORT: "8082"
+  FRIEND-SERVICE: "friend-service"

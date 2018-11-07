@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,27 +19,32 @@ public class AccountServiceClient {
 
     private RestTemplate restTemplate;
 
-    @Value("${ACCOUNT_SERVICE}")
-    private String accountUrl;
+    @Value("${ACCOUNT-SERVICE:account-service}")
+    private String URL;
 
+    @Value("${ACCOUNT-PORT:}")
+    private String PORT;
+
+    private String friendURL = ("http://"+ URL+ ":" +PORT);
 
     @Autowired
     public AccountServiceClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
+
     @HystrixCommand(fallbackMethod = "defaultUser")
-    public Map<String,String> getUserInfo() {
-        logger.info("Getting User");
-        //logger.info(accountUrl);
-        Map<String,String> result = restTemplate.getForObject(accountUrl, Map.class);
+    public Map getUserInfo() {
+        String friendURL = ("http://"+ URL+ ":" +PORT);
+        logger.info("Getting User at "+ friendURL);
+        Map result = restTemplate.getForObject(friendURL, Map.class);
+        logger.info("getUSer(): " + result.toString());
         return result;
     }
     @HystrixCommand(fallbackMethod = "defaultUser")
     public Map<String, String> getUserById(int i) {
-        logger.info("Getting User");
-        String accountIdUrl = accountUrl + Integer.toString(i);
-        //logger.info(accountIdUrl);
+        String accountIdUrl = ("http://"+ URL+ ":" +PORT) +"/"+ Integer.toString(i);
+        logger.info("Getting User" + accountIdUrl);
         Map<String,String> result = restTemplate .getForObject(accountIdUrl, Map.class);
         return result;
     }

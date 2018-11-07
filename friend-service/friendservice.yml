@@ -45,11 +45,13 @@ spec:
           value: "3306"
         - name: DATABASE_USER
           value: coolfriends
-        image: friend-service:v0
+        image: eugeneywang/friendservice:latest
         name: friendservice
         ports:
         - containerPort: 8081
-        resources: {}
+        resources:
+          requests:
+            cpu: 400m
       restartPolicy: Always
 ---
 apiVersion: v1
