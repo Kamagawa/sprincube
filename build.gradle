@@ -20,27 +20,21 @@ subprojects {
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
     }
-
-
     repositories {
         mavenLocal()
-
         maven { url "http://repo.spring.io/milestone" }
         maven { url "http://repo.maven.apache.org/maven2" }
     }
 }
 
 buildscript {
-
     dependencies {
         classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
     }
 }
 
 group = 'sprincube'
-
 apply plugin: 'com.palantir.docker'
-
 task unpack(type: Copy) {
     dependsOn bootJar
     from(zipTree("build/libs/${bootJar.archiveName}"))

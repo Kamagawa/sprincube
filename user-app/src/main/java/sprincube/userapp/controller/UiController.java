@@ -1,4 +1,4 @@
-package sprincube.userapp;
+package sprincube.userapp.controller;
 
 
 import org.slf4j.Logger;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-public class UController {
+public class UiController {
 
-    private final Logger logger = LoggerFactory.getLogger(UController.class);
+    private final Logger logger = LoggerFactory.getLogger(UiController.class);
 
     String message = "Hello World";
 

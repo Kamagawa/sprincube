@@ -1,23 +1,24 @@
-package sprincube.userapp;
+package sprincube.userapp.controller;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sprincube.userapp.client.AccountServiceClient;
+import sprincube.userapp.client.FriendServiceClient;
 
 import java.util.Map;
 
-@RestController
-public class URestController {
+@RestController("/api")
+public class ApiController {
 
-    private final Logger logger = LoggerFactory.getLogger(URestController.class);
+    private final Logger logger = LoggerFactory.getLogger(ApiController.class);
 
     private AccountServiceClient accountServiceClient;
     private FriendServiceClient friendServiceClient;
 
 
-    public URestController(AccountServiceClient accountServiceClient, FriendServiceClient friendServiceClient) {
+    public ApiController(AccountServiceClient accountServiceClient, FriendServiceClient friendServiceClient) {
         this.accountServiceClient = accountServiceClient;
         this.friendServiceClient = friendServiceClient;
     }

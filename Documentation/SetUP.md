@@ -356,6 +356,45 @@ spec:
         - key: redis-config
           path: redis.conf
 ```
+
+## Container profile vs Local Profile.
+Spring allows you to set up specific profiles. The variables in the application.properties or application.yml falls into the default profile. To enable container profile, set container entry point at 
+```bash
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","-Dspring.profiles.active=container", "/app.jar"]
+```
+Where the '-Dspring.profiles.active=container' will activate the container profile. 
+Now you can have two set of variables for uncontainerized and containerized environment. 
+
+```yaml
+spring:
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  application:
+    name: friend-service
+  datasource:
+    url: jdbc:mysql://den1.mysql6.gear.host/coolfriends
+    username: coolfriends
+    password: Ab77F-88M_9l
+  data:
+    rest:
+      base-path: api
+---
+spring:
+  profiles: container
+  datasource:
+    url: jdbc:mysql://den1.mysql6.gear.host/coolfriends
+    host: den1.mysql6.gear.host/32
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+server:
+  port: 8081
+
+The first part of spring is the uncontainerized set up, and the second part is the containerized profile. 
+
+```
 ##Secres 
 A secret is an object that stores sensitive data in an encoded fashion. Secret stores base64 encoded data in a map: 
 ```yaml
@@ -440,3 +479,21 @@ If you don't see a command prompt, try pressing enter.
 
 # curl nginx.default.svc.cluster.local
 ```
+
+# Autoscale
+
+Kubernetes supports Auto-scaling out of the box. However, auto-scale depends on metrics server to determine when to trigger the scaling operation. 
+
+To get set an existing deployment to autoscale, run 
+```yaml
+kubectl autoscale <pod_name> -
+```
+ 
+Autoscale failed because of unable to detect the CPU useage: "\<unknown\>/50%" 
+
+This is because Kubernetes does not have a metrics server or unable to utilize its metrics server. To install a kubernetes metrics server, run: 
+```yaml and error occurs for "CPU: <unknown>/50%"
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/metrics-server/v1.8.x.yaml
+```
+
+If that 

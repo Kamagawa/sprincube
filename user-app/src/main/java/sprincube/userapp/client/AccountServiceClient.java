@@ -1,4 +1,4 @@
-package sprincube.userapp;
+package sprincube.userapp.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import sprincube.userapp.controller.ApiController;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 public class AccountServiceClient {
 
-    private final Logger logger = LoggerFactory.getLogger(URestController.class);
+    private final Logger logger = LoggerFactory.getLogger(ApiController.class);
 
     private RestTemplate restTemplate;
 
@@ -24,8 +24,6 @@ public class AccountServiceClient {
 
     @Value("${ACCOUNT-PORT:}")
     private String PORT;
-
-    private String friendURL = ("http://"+ URL+ ":" +PORT);
 
     @Autowired
     public AccountServiceClient(RestTemplate restTemplate) {
@@ -36,16 +34,20 @@ public class AccountServiceClient {
     @HystrixCommand(fallbackMethod = "defaultUser")
     public Map getUserInfo() {
         String friendURL = ("http://"+ URL+ ":" +PORT);
-        logger.info("Getting User at "+ friendURL);
         Map result = restTemplate.getForObject(friendURL, Map.class);
-        logger.info("getUSer(): " + result.toString());
+        if (logger.isDebugEnabled()){
+            logger.info(String.format("Getting User at %s", friendURL));
+            logger.info(String.format("getUSer(): %s", result.toString()));
+        }
         return result;
     }
     @HystrixCommand(fallbackMethod = "defaultUser")
     public Map<String, String> getUserById(int i) {
         String accountIdUrl = ("http://"+ URL+ ":" +PORT) +"/"+ Integer.toString(i);
-        logger.info("Getting User" + accountIdUrl);
-        Map<String,String> result = restTemplate .getForObject(accountIdUrl, Map.class);
+        if (logger.isDebugEnabled()){
+            logger.info(String.format("Getting User%s", accountIdUrl));
+        }
+        Map<String,String> result = restTemplate.getForObject(accountIdUrl, Map.class);
         return result;
     }
 

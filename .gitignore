@@ -21,6 +21,8 @@ user-app/gradlew/*
 .idea/**/dictionaries
 .idea/**/shelf
 
+**/.idea/**
+
 # Generated files
 .idea/**/contentModel.xml
 
