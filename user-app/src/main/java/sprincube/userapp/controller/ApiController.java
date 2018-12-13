@@ -1,11 +1,11 @@
-package sprincube.userapp.controller;
+package sprincube.bff.controller;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import sprincube.userapp.client.AccountServiceClient;
-import sprincube.userapp.client.FriendServiceClient;
+import sprincube.bff.client.AccountServiceClient;
+import sprincube.bff.client.FriendServiceClient;
 
 import java.util.Map;
 

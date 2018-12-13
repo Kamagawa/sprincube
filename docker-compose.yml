@@ -1,8 +1,8 @@
 version: '2'
 services:
   userapp:
-    image: eugeneywang/userapp
-    container_name: userapp
+    image: eugeneywang/bff
+    container_name: bff
     mem_limit: 256M
 
     entrypoint: ["./wait-for-it.sh","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
@@ -10,8 +10,8 @@ services:
     - 8080:8080
 
   customers-service:
-    image: eugeneywang/account-service
-    container_name: account-service
+    image: eugeneywang/account
+    container_name: account
     mem_limit: 256M
     links:
     - userapp

@@ -1,0 +1,33 @@
+spring:
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  application:
+    name: friend
+  datasource:
+    continueOnError: true
+    initialize: false
+    initialSize: 0
+    timeBetweenEvictionRunsMillis: 5000
+    minEvictableIdleTimeMillis: 5000
+    minIdle: 0
+
+    url: jdbc:mysql://den1.mysql6.gear.host/coolfriends
+    username: coolfriends
+    password: Ab77F-88M_9l
+  data:
+    rest:
+      base-path: api
+---
+spring:
+  profiles: container
+  datasource:
+    url: jdbc:mysql://den1.mysql6.gear.host/coolfriends
+    host: den1.mysql6.gear.host/32
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+server:
+  port: 8081
+

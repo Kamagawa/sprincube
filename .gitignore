@@ -1,5 +1,5 @@
 .gradle/*
-user-app/gradlew/*
+bff/gradlew/*
 .ideal/*
 **/build/*
 **/.gradle/*

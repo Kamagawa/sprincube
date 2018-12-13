@@ -1,4 +1,4 @@
-package sprincube.userapp.client;
+package sprincube.bff.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import sprincube.userapp.controller.ApiController;
+import sprincube.bff.controller.ApiController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class AccountServiceClient {
 
     private RestTemplate restTemplate;
 
-    @Value("${ACCOUNT-SERVICE:account-service}")
+    @Value("${account:account}")
     private String URL;
 
     @Value("${ACCOUNT-PORT:}")

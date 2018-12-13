@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: user-app
+  name: bff
   labels:
-    app: user-app
+    app: bff
 spec:
   selector:
-    app: user-app
+    app: bff
   ports:
   - name: "main"
     port: 80
@@ -15,22 +15,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-app
+  name: bff
   labels:
-    app: user-app
+    app: bff
 spec:
   selector:
       matchLabels:
-        app: user-app
+        app: bff
   replicas: 1
   template:
     metadata:
       labels:
-        app: user-app
+        app: bff
     spec:
       containers:
-        - name: user-app
-          image: user-app:v0
+        - name: bff
+          image: bff:v0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -44,6 +44,6 @@ metadata:
   name: path-config
   namespace: default
 data:
-  ACCOUNT-SERVICE: "account-service"
+  account: "account"
   ACCOUNT-PORT: "8082"
   FRIEND-SERVICE: "friend-service"

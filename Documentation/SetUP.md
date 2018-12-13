@@ -247,7 +247,7 @@ metadata:
   name: path-config
   namespace: default
 data:
-  ACCOUNT_SERVICE: "http://account-service"
+  ACCOUNT_SERVICE: "http://account"
   FRIEND_SERVICE: "http://friend-service"
   ENEMY_SERVICE: "http://enemy-service"
 ```
@@ -266,8 +266,8 @@ spec:
     ...
     spec:
       containers:
-        - name: user-app
-          image: user-app:v0
+        - name: bff
+          image: bff:v0
           imagePullPolicy: IfNotPresent
           ...
           envFrom:

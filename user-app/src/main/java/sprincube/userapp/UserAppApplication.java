@@ -1,4 +1,4 @@
-package sprincube.userapp;
+package sprincube.bff;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

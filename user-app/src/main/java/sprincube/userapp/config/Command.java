@@ -1,4 +1,4 @@
-package sprincube.userapp.config;
+package sprincube.bff.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

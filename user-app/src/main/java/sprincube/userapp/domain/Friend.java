@@ -1,4 +1,4 @@
-package sprincube.userapp.domain;
+package sprincube.bff.domain;
 
 public class Friend {
 }

@@ -2,14 +2,16 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="account-service_main" target="1.8" />
-      <module name="account-service_test" target="1.8" />
+      <module name="account_main" target="1.8" />
+      <module name="account_test" target="1.8" />
+      <module name="bff_main" target="1.8" />
+      <module name="bff_test" target="1.8" />
       <module name="enemy_main" target="1.8" />
       <module name="enemy_test" target="1.8" />
       <module name="friend-service_main" target="1.8" />
       <module name="friend-service_test" target="1.8" />
-      <module name="user-app_main" target="1.8" />
-      <module name="user-app_test" target="1.8" />
+      <module name="friend_main" target="1.8" />
+      <module name="friend_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
