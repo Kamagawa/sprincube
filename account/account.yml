@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: account
-        image: account:v0
+        image: account:lastest
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:

@@ -5,5 +5,4 @@ metadata:
   namespace: default
 data:
   account: "account"
-  ACCOUNT-PORT: "8082"
-  FRIEND-SERVICE: "friend-service"
+  friend: "friend"
