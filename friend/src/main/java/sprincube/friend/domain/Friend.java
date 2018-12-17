@@ -1,4 +1,4 @@
-package sprincube.friendservice.domain;
+package sprincube.friend.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

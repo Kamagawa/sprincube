@@ -4,7 +4,7 @@ import sprincube.friend.domain.Friend;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class FakeFriends {
+public class FriendGenerator {
     static int one = 0;
     public static Friend make(){
         int number = ThreadLocalRandom.current().nextInt(0,5);

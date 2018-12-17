@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: account-service
+  name: account
   labels:
-    app: account-service
+    app: account
 spec:
   selector:
-    app: account-service
+    app: account
   ports:
   - name: "main"
     protocol: TCP
@@ -16,22 +16,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: account-service
+  name: account
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: account-service
+      app: account
       version: v0
   template:
     metadata:
       labels:
-        app: account-service
+        app: account
         version: v0
     spec:
       containers:
-      - name: account-service
-        image: account-service:v0
+      - name: account
+        image: account:v0
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:

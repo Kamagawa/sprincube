@@ -1,8 +1,8 @@
-package sprincube.friendservice.controller;
+package sprincube.friend.controller;
 
-import sprincube.friendservice.conf.FakeFriends;
-import sprincube.friendservice.domain.Friend;
-import sprincube.friendservice.service.FriendRepository;
+import sprincube.friend.conf.FriendGenerator;
+import sprincube.friend.domain.Friend;
+import sprincube.friend.service.FriendRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +24,7 @@ public class FriendController {
         this.friendRepo = friendRepo;
     }
 
-    @RequestMapping("/")
+    @RequestMapping()
     public Iterable<Friend> getAll(){
         return friendRepo.findAll();
     }
@@ -34,31 +34,13 @@ public class FriendController {
         return friendRepo.findById(friendID);
     }
 
-    @RequestMapping("/makeFriends")
+    @RequestMapping("/generate")
     public void makeFriends(@RequestParam(required = false) Integer number){
         if (number == 0){ number++;    }
         ArrayList<Friend> list = new ArrayList<>();
         for(int i = 0; i < number; i++){
-            list.add(FakeFriends.make());
+            list.add(FriendGenerator.make());
         }
         friendRepo.saveAll(list);
     }
-    /*
-
-    @Autowired
-    FriendService friendService;
-
-    @GetMapping("/")
-    public Map<String, Friend> getFriends() {
-        log.info("retrieving friend");
-
-        return friendService.getAll();
-    }
-
-    @GetMapping("/{friendID}")
-    public Friend getFriend(@PathVariable String friendID) {
-        log.info("retrieving friend type");
-        return friendService.find(friendID);
-    }
-    */
 }

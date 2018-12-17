@@ -1,9 +1,9 @@
 
-package sprincube.friendservice.conf;
+package sprincube.friend.conf;
 
 
-import sprincube.friendservice.domain.Friend;
-import sprincube.friendservice.service.FriendRepository;
+import sprincube.friend.domain.Friend;
+import sprincube.friend.service.FriendRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,6 @@ public class FriendConfiguration {
                 }
             };
             friendService.saveAll(friends);
-
         };
     }
 }

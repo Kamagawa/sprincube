@@ -9,7 +9,7 @@ services:
     - MYSQL_USER=springuser
     - MYSQL_PASSWORD=kawapasu
   friendservice:
-    image: eugeneywang/friendservice
+    image: eugeneywang/friend
     depends_on:
     - mysql03
     ports:
