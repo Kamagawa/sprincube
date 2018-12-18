@@ -10,7 +10,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class AccountApplicationTests {
 
     @Test
-    public void contextLoads() {
-    }
+    public void contextLoads() {}
 
+    @Test   //entry tests: java to spring
+    public void main() {
+        AccountApplication.main(new String[] {});
+    }
 }

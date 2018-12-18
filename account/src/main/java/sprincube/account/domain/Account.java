@@ -50,4 +50,14 @@ public class Account {
         this.ducats = ducats;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "\nAccount{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", number=" + number +
+                ", ducats=" + ducats +
+                "}";
+    }
 }

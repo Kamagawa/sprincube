@@ -13,4 +13,10 @@ public class FriendApplicationTests {
     public void contextLoads() {
     }
 
+    @Test   //entry tests: java to spring
+    public void main() {
+        FriendApplication.main(new String[] {});
+    }
+
+
 }

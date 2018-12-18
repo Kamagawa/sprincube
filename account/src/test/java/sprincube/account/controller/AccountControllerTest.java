@@ -3,7 +3,6 @@ package sprincube.account.controller;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,10 +18,7 @@ import sprincube.account.service.AccountService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AccountController.class)
@@ -35,7 +31,7 @@ public class AccountControllerTest {
     List<Account> list;
 
     @Test
-    public void getUserTest() throws Exception {
+    public void findUser() throws Exception {
         Mockito.when(accountService.findAll()).thenReturn(list);
         mockMvc.perform(get("/api/account"))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
@@ -45,9 +41,9 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void findUserByIdTest() throws Exception {
+    public void findUserById() throws Exception {
         Mockito.when(accountService.findAll(2L)).thenReturn(list);
-        mockMvc.perform(get("/api/account/2"))
+        mockMvc.perform(get("/api/account?Id=2"))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
         // todo continue here
 
@@ -65,5 +61,6 @@ public class AccountControllerTest {
         for (int i = 0; i < number; i ++) {
             list.add(new Account((long)i, "ROBOT_"+i, (double)i, (double)Math.random()*1000000000));
         }
+
     }
 }

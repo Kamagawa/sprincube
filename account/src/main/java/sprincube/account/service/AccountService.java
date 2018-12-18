@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 /**
  * The type Account service.
  */
-
 @Service
 public class AccountService {
 
@@ -23,21 +22,32 @@ public class AccountService {
      * Instantiates a new Account service with test account stored.
      */
     public AccountService() {
-        list = new ArrayList<>();
-        testAccount(list);
+        testAccount();
     }
 
 
-    private void testAccount(List list) {
+    private void testAccount() {
+        if (list == null) list = new ArrayList<>();
         for (int i = 0; i < 10; i ++){
-            list.add(new Account((long)i, String.format("ROBOT[%s]", i),(double)20181210*1000+i, Math.random()*1-000-00));
+            list.add(new Account((long)i, String.format("ROBOT%s", i),(double)20181210*1000+i, Math.random()*100000));
         }
     }
 
+    /**
+     * Find all list.
+     *
+     * @return the list
+     */
     public List<Account> findAll(){
         return list;
     }
 
+    /**
+     * Find all list.
+     *
+     * @param id the id
+     * @return the list
+     */
     public List<Account> findAll(Long id){
         return list.stream().filter((account -> account.getId().equals(id))).collect(Collectors.toList());
     }
