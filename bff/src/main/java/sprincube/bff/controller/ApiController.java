@@ -12,7 +12,7 @@ import sprincube.bff.domain.Friend;
 import java.util.List;
 import java.util.Map;
 
-@RestController()
+@RestController
 @RequestMapping("/api")
 public class ApiController {
     private final Logger logger = LoggerFactory.getLogger(ApiController.class);
@@ -30,17 +30,17 @@ public class ApiController {
     }
 
     @GetMapping("/account/{id}")
-    Map<String, String> findAccount(@PathVariable int id) {
+    List<Account> findAccount(@PathVariable int id) {
         return accountClient.findAccount(id);
     }
 
     @GetMapping("/friend")
-    Iterable<Friend> getFriend() {
-        return friendClient.getFriend();
+    Iterable<Friend> findFriend() {
+        return friendClient.findFriend();
     }
 
     @GetMapping("/friend/{id}")
-    Map getFriendType(@PathVariable String id) {
-        return friendClient.getFriendById(id);
+    Iterable<Friend> findFriend(@PathVariable String id) {
+        return friendClient.findFriend(id);
     }
 }

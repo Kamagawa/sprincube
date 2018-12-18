@@ -20,6 +20,8 @@ spring:
   data:
     rest:
       base-path: api
+server:
+  port: 8081
 ---
 spring:
   profiles: container
@@ -28,6 +30,5 @@ spring:
     host: den1.mysql6.gear.host/32
     username: ${DATABASE_USER}
     password: ${DATABASE_PASSWORD}
-server:
-  port: 8081
+
 

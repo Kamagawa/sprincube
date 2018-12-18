@@ -5,15 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 public class Account extends Base {
-    @JsonProperty
     Long id;
-    @JsonProperty
     String name;
-    @JsonProperty
     Double number;
-    @JsonProperty
     Double ducats;
-
     public Account(){}
 
     public Account(Long id, String name, Double number, Double ducats){
