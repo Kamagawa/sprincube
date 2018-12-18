@@ -495,5 +495,3 @@ This is because Kubernetes does not have a metrics server or unable to utilize i
 ```yaml and error occurs for "CPU: <unknown>/50%"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/metrics-server/v1.8.x.yaml
 ```
-
-If that 
