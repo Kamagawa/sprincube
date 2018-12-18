@@ -1,7 +1,14 @@
 package sprincube.account.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.persistence.Entity;
 import java.io.Serializable;
 
+@Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Account implements Serializable {
     Long id;
     String name;

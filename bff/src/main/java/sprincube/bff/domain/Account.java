@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-
-public class Account implements Serializable {
+public class Account extends Base {
     @JsonProperty
     Long id;
     @JsonProperty

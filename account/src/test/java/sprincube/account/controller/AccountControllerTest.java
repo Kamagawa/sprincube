@@ -57,7 +57,7 @@ public class AccountControllerTest {
     public void generateAccounts(int number) {
         if (list== null) list = new ArrayList<>();
         for (int i = 0; i < number; i ++) {
-            list.add(new Account((long)i, "ROBOT_"+i, (double)i, (double)Math.random()*1000000000));
+            list.add(new Account((long)i, "ROBOT_"+i, (double)i, Math.random() *1000000000));
         }
 
     }

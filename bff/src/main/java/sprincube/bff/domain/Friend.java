@@ -1,6 +1,6 @@
 package sprincube.bff.domain;
 
-public class Friend {
+public class Friend extends Base {
     public static final int ACQUAINTANCE = 0;
     public static final int CASUAL_FRIEND = 1;
     public static final int CLOSE_FRIEND = 2;

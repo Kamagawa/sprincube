@@ -9,7 +9,7 @@ public class FriendGeneratorTest {
     FriendGenerator friendGenerator;
     @Test
     public void FriendGenerate() {
-        Friend friend = friendGenerator.make();
+        Friend friend = FriendGenerator.make();
         //System.out.println(friend.getId());
         assert friend.getId()>=0;
         assert friend.getName()!=null;

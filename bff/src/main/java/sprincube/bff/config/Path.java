@@ -9,6 +9,7 @@ public class Path {
     public String accountURL;
     public String friendURL;
 
+
     public String getAccountURL() {
         return accountURL;
     }
