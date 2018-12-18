@@ -26,7 +26,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class AccountControllerTest {
     @MockBean private AccountService accountService;
     @Autowired private MockMvc mockMvc;
-    private AccountController accountController;
 
     List<Account> list;
 
@@ -52,7 +51,6 @@ public class AccountControllerTest {
 
     @Before
     public void Setup() {
-        accountController = new AccountController(accountService);
         generateAccounts(0xfff);
     }
 

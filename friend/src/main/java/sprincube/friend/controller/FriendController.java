@@ -11,28 +11,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 @RestController()
+@RequestMapping("/api/friend")
 public class FriendController {
     private static Logger log = LoggerFactory.getLogger(FriendController.class);
-
     private FriendRepository friendRepo;
-
-
     public FriendController(FriendRepository friendRepo){
         this.friendRepo = friendRepo;
     }
 
     @RequestMapping()
-    public Iterable<Friend> getAll(){
+    public Iterable<Friend> find(@RequestParam(required = false) Integer Id) {
+        if (Id !=null) return friendRepo.findAllById(Collections.singleton(Id));
         return friendRepo.findAll();
     }
 
-    @RequestMapping("/{friendID}")
-    public Optional<Friend> getFriend(@PathVariable int friendID){
-        return friendRepo.findById(friendID);
-    }
 
     @RequestMapping("/generate")
     public void makeFriends(@RequestParam(required = false) Integer number){

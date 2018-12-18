@@ -29,6 +29,12 @@ public class Friend {
         this.type = type;
     }
 
+    public Friend(int id, String name, int type) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }
