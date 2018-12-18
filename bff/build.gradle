@@ -38,6 +38,10 @@ dependencies {
     
 }
 
+bootJar {
+    baseName = 'bff'
+    version =  '0.1.0'
+}
 
 
 dependencyManagement {

@@ -1,5 +1,4 @@
 #!/usr/bin/bash
-eval $(minikube docker-env)
 gradle build bootjar
 docker build -t account:latest .
 kubectl apply -f account.yml

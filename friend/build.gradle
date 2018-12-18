@@ -27,20 +27,21 @@ repositories {
     maven { url "https://repo.spring.io/milestone" }
 }
 
+bootJar {
+    baseName = 'friend'
+    version =  '0.1.0'
+}
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
-
     runtime('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile('org.springframework.boot:spring-boot-starter-groovy-templates')
     compile('org.springframework.boot:spring-boot-starter-web')
-
     compile('org.webjars:jquery:2.2.4')
     compile('org.webjars:bootstrap:3.3.6')
     compile('org.webjars:angularjs:1.5.7')
-
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
     runtime('mysql:mysql-connector-java')

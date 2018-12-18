@@ -46,7 +46,7 @@ public class FriendControllerTest {
     @Test
     public void findUserById() throws Exception {
         Mockito.when(friendRepository.findAllById(Collections.singleton(2))).thenReturn(Collections.singletonList(list.get(2)));
-        mockMvc.perform(get("/api/friend?Id=2"))
+        mockMvc.perform(get("/api/friend?id=2"))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
         // todo continue here
 

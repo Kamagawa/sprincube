@@ -12,8 +12,4 @@ public class AccountApplicationTests {
     @Test
     public void contextLoads() {}
 
-    @Test   //entry tests: java to spring
-    public void main() {
-        AccountApplication.main(new String[] {});
-    }
 }

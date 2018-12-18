@@ -7,7 +7,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,7 +21,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AccountController.class)
-@EnableSpringDataWebSupport
 public class AccountControllerTest {
     @MockBean private AccountService accountService;
     @Autowired private MockMvc mockMvc;
@@ -42,7 +40,7 @@ public class AccountControllerTest {
     @Test
     public void findUserById() throws Exception {
         Mockito.when(accountService.findAll(2L)).thenReturn(list);
-        mockMvc.perform(get("/api/account?Id=2"))
+        mockMvc.perform(get("/api/account?id=2"))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
         // todo continue here
 

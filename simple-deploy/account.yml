@@ -1,0 +1,40 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: account
+  labels:
+    app: account
+spec:
+  selector:
+    app: account
+  ports:
+  - name: "main"
+    protocol: TCP
+    port: 80
+    targetPort: 8082
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account
+      version: v0
+  template:
+    metadata:
+      labels:
+        app: account
+        version: v0
+    spec:
+      containers:
+      - name: account
+        image: account:lastest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: path-config
+        ports:
+        - containerPort: 8082
