@@ -24,8 +24,8 @@ public class FriendController {
     }
 
     @RequestMapping()
-    public Iterable<Friend> find(@RequestParam(required = false) Integer Id) {
-        if (Id !=null) return friendRepo.findAllById(Collections.singleton(Id));
+    public Iterable<Friend> find(@RequestParam(required = false) Integer id) {
+        if (id !=null) return friendRepo.findAllById(Collections.singleton(id));
         return friendRepo.findAll();
     }
 

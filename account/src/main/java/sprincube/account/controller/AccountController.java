@@ -15,8 +15,8 @@ public class AccountController {
     }
 
     @GetMapping()
-    public List<Account> findUser(@RequestParam(required = false) Long Id) {
-        if (Id==null) return accountService.findAll();
-        return accountService.findAll(Id);
+    public List<Account> findUser(@RequestParam(required = false) Long id) {
+        if (id==null) return accountService.findAll();
+        return accountService.findAll(id);
     }
 }

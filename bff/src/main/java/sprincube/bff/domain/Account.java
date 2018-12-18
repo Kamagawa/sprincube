@@ -1,9 +1,18 @@
 package sprincube.bff.domain;
 
-public class Account {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
+
+
+public class Account implements Serializable {
+    @JsonProperty
     Long id;
+    @JsonProperty
     String name;
+    @JsonProperty
     Double number;
+    @JsonProperty
     Double ducats;
 
     public Account(){}

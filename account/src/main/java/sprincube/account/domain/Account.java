@@ -1,6 +1,8 @@
 package sprincube.account.domain;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
     Long id;
     String name;
     Double number;
