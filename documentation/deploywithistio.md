@@ -1,81 +1,24 @@
-# What is Istio
 
-Istio Service mesh includes service discovery, load balancing, failure recovery, metrics and monitoring. 
-Istio provides control over the service mesh to allow deploy service with load balancing, 
-service to service authentication, monitoring without changing the service codes
+Deploy application on kubernetes with Istio:
+1. Build the project into a executable, in java it would be 
+`gradle clean build` or [`mvn clean compile assembly:single`](https://stackoverflow.com/a/574650/5378109)
 
-Core Features
+2. write a dockerfile that wraps the jar, be sure to expose the right endpoints and create a docker 
+image by running `docker build –t <image_name:version> .`. the last period is for current directory
 
--   Traffic management
+3. To expediently deploy the image in Kubernetes as a deployment and service, 
 
-    -   Control the API calls between the services
+    a. `kubectl run <deployment_name> --image=<image_name:version> --port=<port>` and this will create the deployment 
+along with a pod. 
+    
+    b. expose the deployment as a service, `kubectl expose deployment \<deployment_name\> --type=”type”`.
 
-    -   Simplifies configuration for circuit breaker, timeouts and retries,
-        making more reliable calls
+    c. As for 'type', `clusterIP`(default): exposes internally, cannot be accessed from outside the VM. 
+    <b>`NodePort`</b>: expose externally and can be accessed from local browser. 
+    `LoadBalancer`:  if the service has multiple deployments (ex. Multiple versions), the load balancer 
+    service will balance the incoming traffic and direct it to a certain version, depending on the rule specified for traffic routing.
 
--   Security
-
-    -   Istio manages authentication, authorization, and encryption of service
-        communications
-
-    -   Service communications are secured by default
-
--   Observability
-
-    -   Robust tracing, monitoring, and logging
-
-Pilot: Service Discovery using Kubernetes service registry, dynamic request
-routing, circuit breaker,
-
-Citadel: authentication service, could upgrade unencrypted traffic and control
-service access, uses mTLS
-
-Galley: API configuration for Istio
-
-Envoy:
-
--   A proxy sidecar that is injected into each pod as a separate container.
-
--   Envoy intercepts all inbound and outbound api calls to and from the pod that
-    it is injected in.
-
--   Envoy then perform service discovery and update their load balancing pool
-    accordingly.
-
--   Failure recovery feature
-
-Deploy:
-
--   Do a build on all the projects that are being deployed
-
--   Write a DockerFile or Docker-compose file for each project and in a cmd
-    prompt window, navigate to the folder of the project and run docker build –t
-    \<image_name:version\> .
-
--   Docker will then locate and run the DockerFile to make the image with the
-    jar file that was built earlier.
-
--   To deploy the image in Kubernetes as a deployment and service, there are two
-    options:
-
-    -   First method is to run the command kubectl run \<deployment_name\>
-        --image=\<image_name:version\> --port=\<port\> and this will create the
-        deployment along with a pod. Then to expose the deployment as a service,
-        run command kubectl expose deployment \<deployment_name\> --type=”type”.
-
-        -   There are different type of services. The default type is ClusterIP,
-            meaning it is only exposed internally and cannot be accessed from
-            outside the VM. There is also “NodePort” type which is to expose
-            externally and can be accessed from local browser. (Method for
-            accessing will be described later). There is also “LoadBalancer”
-            type with if the service has multiple deployments (ex. Multiple
-            versions), the load balancer service will balance the incoming
-            traffic and direct it to a certain version, depending on the rule
-            specified for traffic routing.
-
-    -   The other method is to make a deployment.yaml file with the necessary
-        information to make a deployment and a service with the imaged created
-        earlier.
+4. To deploy the "best practice way", put specification into deployment.yaml files and run them:
 
         -   For making the deployment (kind = deployment) and the service (kind
             = service), specify name and label so they can be identified by

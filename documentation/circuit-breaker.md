@@ -1,16 +1,12 @@
 ![](media/2b8536a0f0fc710c3090aa48e971c474.png)
 
-Circuit breaker:
+# Circuit breaker:
 
-Bulkhead pattern:
+Bulkhead pattern prevents the entire system from failing when one part fails, similar to what is used for Hystrix and Envoy circuit breaker
 
--   Prevents the entire system from failing when one part fails
+## Hystrix:
 
--   Similar idea is used for Hystrix and Envoy circuit breaker
-
-Hystrix:
-
--   Two approaches: Thread isolation and Semaphore Isolation
+Hystrix has 2 appraoches Two approaches: Thread isolation and Semaphore Isolation
 
     -   Thread Isolation: direct all request to a separate pool with a fixed
         number of threads
@@ -19,7 +15,7 @@ Hystrix:
         calling before making request to that service, no permit means service
         is down and the call will be stopped
 
-Envoy:
+# Envoy:
 
 -   Circuit breaker:
 
