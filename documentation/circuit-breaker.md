@@ -6,7 +6,7 @@ Bulkhead pattern prevents the entire system from failing when one part fails, si
 
 ## Hystrix:
 
-Hystrix has 2 appraoches Two approaches: Thread isolation and Semaphore Isolation
+Hystrix has two approaches: Thread isolation and Semaphore Isolation
 
     -   Thread Isolation: direct all request to a separate pool with a fixed
         number of threads
