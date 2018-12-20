@@ -1,15 +1,119 @@
 # Autoscale
 
-Kubernetes supports Auto-scaling out of the box. However, auto-scale depends on metrics server to determine when to trigger the scaling operation. 
+[Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) (HPA) is a Kubernetes feature to dynamically increase/decrease the number of pod replicas based on resource utilization metrics.
 
-To get set an existing deployment to autoscale, run 
-```yaml
-kubectl autoscale <pod_name> 
-```
- 
-Autoscale failed because of unable to detect the CPU useage: "\<unknown\>/50%" 
+As of k8s version 1.9, the direction for HPA is to use the Metrics Server rather than 
+[Heapster](https://github.com/kubernetes/heapster).
 
-This is because Kubernetes does not have a metrics server or unable to utilize its metrics server. To install a kubernetes metrics server, run: 
-```yaml and error occurs for "CPU: <unknown>/50%"
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/metrics-server/v1.8.x.yaml
+HPA can automatically scale pods deployed in a replication controller, deployment, or a replica set. 
+For additional information on how HPA works, check out the Kubernetes 
+[community documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).
+
+## Prerequisites
+
+In order to perform exercises in this chapter, you’ll need to deploy configurations to a Kubernetes cluster. Please
+refer to [environment setup](environment-setup.md),  and [deploy with istio](/deploywithistio.md).
+
+Deploy the metrics server:
+
+    $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/metrics-server/v1.8.x.yaml
+
+## Deploy an application
+
+In this step, we deploy a simple Go web application and constrain the CPU resources just for the purposes of this test.
+In fact, any deployment can be deployed and tested this way:
+
+    $ kubectl run webapp --image=trevorrobertsjr/webapp --requests=cpu=50m --expose --port=8080
+    service "webapp" created
+    deployment "webapp" created
+
+It also publishes the service at port 8080.
+
+## Horizontal Pod Autoscaler configuration
+
+Now that our application is running, we create a Horizonal Pod Autoscaler for our webapp deployment.
+
+    $ kubectl autoscale deployment webapp --cpu-percent=10 --min=1 --max=10
+    deployment "webapp" autoscaled
+
+This command will mainain between 1 and 10 replicas of the pod. The autoscaler will increase or decrease the number of replicas to maintain average CPU utilization of 10% across all the pods.
+A typical HPA deployment would look like:  
+```bash
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: webapp
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    name: catalogue
+
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
 ```
+## Generate load
+
+The simplest method to do this would be to access the application in an infinite loop similar to the example in the Kubernetes Horizonal Pod Autoscaler documentation:
+
+First, deploy a busybox container, label it `load-generator` and attach to it's prompt:
+
+    $ kubectl run -i --tty load-generator --image=busybox /bin/sh
+
+At the `load-generator` command prompt, run a continuous request of the webapp
+
+    $ while true; do wget -q -O- http://webapp.default.svc.cluster.local:8080; done
+
+If for any reason you get disconnected from the load-generator container, you can re-attach to it with the following command.
+
+    $ kubectl attach $(kubectl get pod | grep load | awk '{print $1}') -c load-generator -i -t
+
+In a different terminal window, check the status of the Horizontal Pod Autoscaler.
+
+    $ kubectl get hpa -w
+
+You will see output similar to the following over successive queries of the hpa resource:
+
+    $ kubectl get hpa -w
+    NAME      REFERENCE           TARGETS    MINPODS   MAXPODS   REPLICAS   AGE
+    webapp    Deployment/webapp   0% / 10%   1         10        1          6m
+    webapp    Deployment/webapp   62% / 10%   1         10        1         7m
+    webapp    Deployment/webapp   62% / 10%   1         10        4         7m
+    webapp    Deployment/webapp   112% / 10%   1         10        4         8m
+    webapp    Deployment/webapp   112% / 10%   1         10        4         8m
+    webapp    Deployment/webapp   53% / 10%   1         10        4         9m
+
+
+Notice that, eventually, the value in the `REPLICAS` column will increase as the load generator continues to run.
+
+## Stop load
+
+In the terminal window that is running the load generator, hit `Ctrl`+`C` to terminate the process. Again, run the `kubectl get hpa -w` command in your other terminal window, and you will see the number of replicas begin to decrease as the CPU load returns to 0%. It shows the output:
+
+NOTE: It takes a few minutes for the number of replicas to scale down.
+
+```
+$ kubectl get hpa -w
+NAME      REFERENCE           TARGETS     MINPODS   MAXPODS   REPLICAS   AGE
+webapp    Deployment/webapp   51% / 10%   1         10        4          10m
+webapp    Deployment/webapp   51% / 10%   1         10        4         10m
+webapp    Deployment/webapp   27% / 10%   1         10        4         11m
+webapp    Deployment/webapp   27% / 10%   1         10        8         11m
+webapp    Deployment/webapp   0% / 10%   1         10        8         12m
+webapp    Deployment/webapp   0% / 10%   1         10        8         12m
+webapp    Deployment/webapp   0% / 10%   1         10        8         13m
+webapp    Deployment/webapp   0% / 10%   1         10        8         13m
+webapp    Deployment/webapp   0% / 10%   1         10        8         14m
+webapp    Deployment/webapp   0% / 10%   1         10        8         14m
+webapp    Deployment/webapp   0% / 10%   1         10        8         15m
+webapp    Deployment/webapp   0% / 10%   1         10        8         15m
+webapp    Deployment/webapp   0% / 10%   1         10        8         16m
+webapp    Deployment/webapp   0% / 10%   1         10        1         16m
+webapp    Deployment/webapp   0% / 10%   1         10        1         17m
+```
+
+## Cleanup
+
+    $ kubectl delete hpa/webapp deploy/load-generator deploy/webapp

@@ -53,6 +53,9 @@ Aside from container level port forwarding, one can name the port at of "http" a
 ## CoreDNS
 Core DNS is a replacement to the kube-DNS, it offers "chained plugin", which means, it supports mutiple plugins, which also means, it opens up the option to program customizable plugin. CoreDNS could be used to give a higer degree of freedom when we need to handle our own DNS service discovery.
 
+## Instana
+instanna is a sensor based plugin for kubernetes that enables auto discover and monitor of microservices 
+
 ## Test on DNS Records: 
 run this: 
 ```bash
