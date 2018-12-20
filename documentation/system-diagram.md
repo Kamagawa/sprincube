@@ -7,6 +7,14 @@ First the user makes a call and it it is been sent through ingress gateway. Then
 the ingress gate way sends the request into subsequent services. The services can send communicate with each other 
 and so can they listen directly from the ingress gateway. All processing data are again sent to telemetry. 
 
+## Service and Deployment 
+[![](media/istiohowitworks.png)](https://developer.ibm.com/courses/how-istio-works-dwc024/)
+how services and istio work with each other. 
+
+## Istio Injection
+[![](media/injectistio.png)](https://medium.com/@bahubalishetti/properly-building-images-for-istio-deployment-installing-istio-part-2-5d3f63105070)
+Istio inject envoy into the services such that it will be all included in the mesh
+
 ## Three Senarios of Database: 
 #### Senario one: external db out of the mesh
 [![](media/mysql.svg)](https://istio.io/blog/2018/egress-tcp/)
