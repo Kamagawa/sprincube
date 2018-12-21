@@ -3,8 +3,8 @@ Distributed Tracing:
 -   Tracing is the logging of system activity, a data dump of all the traces
     that occurred
 
--   Traces are the end-to-end data for a request, from the webpage until the
-    data is returned
+-   Traces are the end-to-end data for a request, from the moment a request enters
+    the cluster to the moment a result returned
 
 -   Traces are made up of spans which can have more child spans
 
@@ -47,7 +47,8 @@ Jaeger vs Zipkin:
 -   Recommendation is to evaluate Jaeger first and it Jaeger is not a good fit
     then Zipkin
 
--   Jaeger has good
+-   However, according to Istio feature release not, Jaeger is only in Alpha stage
+    and is not production ready yet.
 
 Prometheus:
 

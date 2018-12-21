@@ -3,8 +3,8 @@
 1. Build the project into a executable, in java it would be 
 `gradle clean build` or [`mvn clean compile assembly:single`](https://stackoverflow.com/a/574650/5378109)
 
-2. write a dockerfile that wraps the jar, be sure to expose the right endpoints and create a docker 
-image by running `docker build –t <image_name:version> .`. the last period is for current directory
+2. Write a Dockerfile that wraps the jar and create a docker image by running 
+`docker build –t <image_name:version> <directory_of_Dockerfile>`.
 
 3. To expediently deploy the image in Kubernetes as a deployment and service, 
 
