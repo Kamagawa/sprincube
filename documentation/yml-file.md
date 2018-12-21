@@ -27,6 +27,10 @@ gateway-svc.yml // for Service
 gateway-dep.yml // for Deployment
 ```
 
+# Single File for Development and Mutiple for Deployment
+It is been practice by kubernetes developer at Amazon that during development, each file would contain one object. 
+Different versions would also be segreggated into different files. Eventually, the selected objects and their versions
+would be compiled into a single `all in one file`.  
 
 # Configuration rolling update
 [An approach found online recommends writing a script that would trigger redeployment upon configuration changes](https://boxboat.com/2018/07/05/gitops-kubernetes-rolling-update-configmap-secret-change/)
