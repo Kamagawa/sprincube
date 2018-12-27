@@ -1,6 +1,6 @@
 # Ymal File Structure(best practice)
 
-[Official Docs](https://kubernetes.io/docs/concepts/configuration/overview/) 
+[Official Documentation](https://kubernetes.io/docs/concepts/configuration/overview/) 
 
 # All in one (Istio Official)
 Always put environment related deployment first. This means path config, secrets, and service entry will be deployed before
@@ -45,14 +45,41 @@ would be compiled into a single `all in one file`.
 6. put description in annotation
  
  
-## Conclusion
-As of discussion with Jack, the latest concensus is to build each kubernetes components into its own file, group them 
-on a project by project basis and compile an one 'all in one' deployment file, and then compile all system files related
-to one directory. For example: 
+## Deployment Structure and Priorities
+As of discussion with Jack, the latest consensus is to build each kubernetes components, which are each object that 
+begin with `kind`, into its own file. Then group them on a project by project basis. 
+Subsequently, compile an one 'all in one' deployment file for each application, 
+and then compile all system files concerning all applications to `System` directory. For example: 
 
-```bash
-|-BFF
-|-Account
-|-Friend
-|-System
 ```
+- BFF
+    bff.yaml        // all in one yaml file
+    - Service
+        - bff-service-vm.yaml
+        - bff-service-kubernetes.yaml
+        - bff-service-istio.yaml
+    - Deployment
+        - bff-deployment.yaml
+        - bff-deployment-hpa.yaml
+        - bff-deployment-mutipods.yaml
+    - VirtualService
+        - bff-virtualservice.yaml
+        - bff-virtualservice-mysql.yaml
+        - bff-virtualservice-variant.yaml
+    - Mysql
+    ...
+- Account
+   account.yaml     // account all in one yaml file
+   - Service
+   - Deployment
+   ...
+- Friend
+...
+- System            // system deployed first
+    - ConfigMap
+    - Sercrets
+    - PVClaim
+    - PV
+    ...
+```
+
