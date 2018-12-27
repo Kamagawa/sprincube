@@ -23,6 +23,7 @@ proxy intercepts all network communication between microservices and manage the 
 Two example scenarios to do canary deployment with Istio Pilot traffic management. In the first one, a new version is 
 published and a portion of the traffic is routed to the new version. If the new version is stable, then traffic 
 will be gradually shifted to the new version. In the second scenario, only specific users can access the new version.
+Virtual services and destination rules are required to delegate the traffic to the different versions. 
 
 ##Pilot
 [![](media/ServiceModel_Versions.svg)](https://istio.io/docs/concepts/traffic-management/)
